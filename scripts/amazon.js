@@ -1,71 +1,5 @@
-const product = [
-  {
-    image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-    name: "Adults Plain Cotton T-Shirt 2 Pack - Teal",
-    rating: {
-      stars: 4.5,
-      count: 87,
-    },
-    priceCents: 1090,
-  },
-  {
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-      stars: 4,
-      count: 110,
-    },
-    priceCents: 1299,
-  },
-
-  {
-    image: "images/products/intermediate-composite-basketball.jpg",
-    name: " Intermediate Size Basketball",
-    rating: {
-      stars: 4.5,
-      count: 79,
-    },
-    priceCents: 799,
-  },
-  {
-    image: "images/products/black-2-slot-toaster.jpg",
-    name: " 2 Slot Toaster - Black",
-    rating: {
-      stars: 5,
-      count: 2190,
-    },
-    priceCents: 899,
-  },
-  {
-    image: "images/products/6-piece-white-dinner-plate-set.jpg",
-    name: " 6 Piece White Dinner Plate Set",
-    rating: {
-      stars: 4,
-      count: 37,
-    },
-    priceCents: 2067,
-  },
-  {
-    image: "images/products/6-piece-non-stick-baking-set.webp",
-    name: "6-Piece Nonstick, Carbon Steel Oven Bakeware Baking",
-    rating: {
-      stars: 4.5,
-      count: 175,
-    },
-    priceCents: 34.99,
-  },
-  {
-    image: "images/products/plain-hooded-fleece-sweatshirt-yellow.jpg",
-    name: "Plain Hooded Fleece Sweatshirt",
-    rating: {
-      stars: 4.5,
-      count: 153,
-    },
-    priceCents: 2400,
-  },
-];
 let card = ``;
-product.forEach((value) => {
+products.forEach((value) => {
   card += `
   
  <div class="product-container">
@@ -116,9 +50,34 @@ product.forEach((value) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">Add to Cart</button>
+          <button class="add-to-cart-button button-primary js-add-to-card" data-product-id="${
+            value.id
+          }">Add to Cart</button>
         </div>
   `;
-  console.log(card);
   document.querySelector(".products-grid").innerHTML = card;
+
+  document.querySelectorAll(".js-add-to-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.dataset.productId;
+
+      let matchingItem;
+
+      cart.forEach((item) => {
+        if (item.productId === productId) {
+          matchingItem = item;
+        }
+      });
+
+      if (matchingItem) {
+        matchingItem.quantity++;
+      } else {
+        cart.push({
+          productId: productId,
+          quantity: 1,
+        });
+      }
+      console.log(cart);
+    });
+  });
 });
