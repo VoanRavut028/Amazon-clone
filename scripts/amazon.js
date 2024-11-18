@@ -1,4 +1,8 @@
+import { cart } from "../data/cart.js";
+
 let card = ``;
+
+import { products } from "../data/products.js";
 products.forEach((value) => {
   card += `
   
