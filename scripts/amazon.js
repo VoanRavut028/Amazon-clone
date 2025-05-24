@@ -1,8 +1,7 @@
-import { cart } from "../data/cart.js";
-
-let card = ``;
-
 import { products } from "../data/products.js";
+import { addToCart } from "../data/cart.js";
+import { UpdateQuantity } from "../data/cart.js";
+let card = ``;
 products.forEach((value) => {
   card += `
   
@@ -21,7 +20,7 @@ products.forEach((value) => {
           <div class="product-rating-container">
             <img
               class="product-rating-stars"
-              src="images/ratings/rating-05.png"
+              src="images/ratings/rating-${(value.rating.stars)*10}.png"
             />
             <div class="product-rating-count link-primary">${
               value.rating.count
@@ -60,33 +59,6 @@ products.forEach((value) => {
         </div>
   `;
   document.querySelector(".products-grid").innerHTML = card;
-
-  function addToCart(productId) {
-    let matchingItem;
-
-    cart.forEach((Carditem) => {
-      if (Carditem.productId === productId) {
-        matchingItem = Carditem;
-      }
-    });
-
-    if (matchingItem) {
-      matchingItem.quantity++;
-    } else {
-      cart.push({
-        productId: productId,
-        quantity: 1,
-      });
-    }
-  }
-
-  const UpdateQuantity = () => {
-    let cartQuanity = 0;
-    cart.forEach((item) => {
-      cartQuanity += item.quantity;
-    });
-    document.querySelector(".js-cart-quantity").innerHTML = cartQuanity;
-  };
 
   document.querySelectorAll(".js-add-to-card").forEach((button) => {
     button.addEventListener("click", () => {
