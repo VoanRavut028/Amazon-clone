@@ -1,7 +1,7 @@
 import { products } from "../data/products.js";
 import { addToCart } from "../data/cart.js";
-import { UpdateQuantity } from "../data/cart.js";
 let card = ``;
+
 products.forEach((value) => {
   card += `
   
@@ -20,7 +20,7 @@ products.forEach((value) => {
           <div class="product-rating-container">
             <img
               class="product-rating-stars"
-              src="images/ratings/rating-${(value.rating.stars)*10}.png"
+              src="images/ratings/rating-${value.rating.stars * 10}.png"
             />
             <div class="product-rating-count link-primary">${
               value.rating.count
@@ -53,11 +53,14 @@ products.forEach((value) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary js-add-to-card" data-product-id="${
+          <button class="js-add-to-card add-to-cart-button button-primary " data-product-id="${
             value.id
           }">Add to Cart</button>
         </div>
   `;
+});
+
+if (document.querySelector(".products-grid")) {
   document.querySelector(".products-grid").innerHTML = card;
 
   document.querySelectorAll(".js-add-to-card").forEach((button) => {
@@ -67,4 +70,21 @@ products.forEach((value) => {
       UpdateQuantity();
     });
   });
-});
+
+  UpdateQuantity();
+}
+
+UpdateQuantity();
+export function UpdateQuantity() {
+  let cartQuantity = 0;
+  const latestCart = JSON.parse(localStorage.getItem("cart")) || [];
+  latestCart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
+  localStorage.setItem("cartQuantity", cartQuantity);
+  const showQuantity = document.querySelector(".js-cart-quantity");
+  if (showQuantity) {
+    showQuantity.innerHTML = cartQuantity;
+  }
+}
