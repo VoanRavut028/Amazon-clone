@@ -87,4 +87,5 @@ export function UpdateQuantity() {
   if (showQuantity) {
     showQuantity.innerHTML = cartQuantity;
   }
+  return cartQuantity;
 }

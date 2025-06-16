@@ -1,5 +1,10 @@
 import { paymentSummary } from "../scripts/checkout/paymentSummary.js";
-export let cart = JSON.parse(localStorage.getItem("cart")) || [];
+export let cart = [];
+
+loadFromLocalstorage();
+export function loadFromLocalstorage() {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+}
 
 function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -42,4 +47,15 @@ export function deleteProduct(productId) {
   paymentSummary();
 }
 
-function isUpdateQuantity(productId, newQuantity) {}
+export function updateDeliveryOption(productId, deliveryOption) {
+  let matchingItem;
+  cart.forEach((e) => {
+    if (productId === e.productId) {
+      matchingItem = e;
+    }
+  });
+  matchingItem.deliveryOptionsId = deliveryOption;
+  saveToStorage();
+}
+
+

@@ -462,7 +462,7 @@ export const products = [
     id: "bc2847e9-5323-403f-b7cf-57fde044a955",
     image: "images/products/men-cozy-fleece-zip-up-hoodie-red.jpg",
     name: "Men's Full-Zip Hooded Fleece Sweatshirt",
-    rating: {
+    rating: {  
       stars: 4.5,
       count: 3157,
     },
@@ -472,7 +472,7 @@ export const products = [
 ];
 
 export function getProduct(productId) {
-  let matchingItem;
+  let matchingItem; 
   products.forEach((product) => {
     if (product.id === productId) {
       matchingItem = product;

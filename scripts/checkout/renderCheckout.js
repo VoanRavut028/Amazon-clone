@@ -1,7 +1,8 @@
-import { cart, deleteProduct } from "../../data/cart.js";
+import { cart, deleteProduct, updateDeliveryOption } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { UpdateQuantity } from "../amazon.js";
 // import paymentSummary from "./utils/paymentSummary.js";
 export function renderCheckout() {
   let ShowInnerHTML = ``;
@@ -137,7 +138,10 @@ export function renderCheckout() {
       const isChecked = deliveryOption.id == cartItem.deliveryOptionsId;
 
       html += `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+      data-productId-id="${matchingProduct.id}"
+      data-delivery-option-id = "${deliveryOption.id}"
+      >
         <input
           type="radio"
           ${isChecked ? "checked" : ""}
@@ -154,6 +158,13 @@ export function renderCheckout() {
     return html;
   }
 }
+
+document.querySelectorAll(".js-delivery-option").forEach((element) => {
+  element.addEventListener("click", () => {
+    const { productId, deliveryOptionId } = element.dataset;
+    updateDeliveryOption(productId, deliveryOptionId);
+  });
+});
 
 function reUpdateQauntity() {
   //When user click on update btn
